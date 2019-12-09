@@ -210,27 +210,29 @@
     $(document).ready(function() {
     $("#submitButton").on("click", function() {
          
-        function newForm() {
+        function validateForm() {
             
-            var completeForm = true;
+            const isValid = true;
             $(".form-control").each(function() {
                 if ($(this).val() === ""){
-                    completeForm = false;
+                    isValid = false;
                 }
             });
             $(".select").each(function() {
-                if ($(this).val() === ""){
-                    completeForm = false;
+                
+              if ($(this).val() === ""){
+                    isValid = false;
                 }
             });
-            return completeForm;
+            return isValid;
         }
          
-        if (newForm() == true) {
+        if (validateForm() === true)
+          {
              
-            var newFriend = {
-                name: $("#formName").val().trim(),
-                profilePic: $("#formImage").val().trim(),
+            const userData = {
+                name: $("#name").val(),
+                profilePic: $("#photo").val(),
                 scores: [
                     $('#Q1').val(),
                     $('#Q2').val(),
@@ -245,10 +247,10 @@
 
                 ]
             };
-             
-            var currentURL = window.location.origin;
-             
-            $.post(currentURL + "/api/friends", newFriend, function(data) {
+            //  Grab the URL of the website
+            const currentURL = window.location.origin;
+            //  AJAX post the data to the friends API
+            $.post(currentURL + "/api/friends", userData, function(data) {
                 
                 $("#matchName").text(data.name);
                 $("#matchImg").attr("src", data.photo);
@@ -262,10 +264,18 @@
             $('#Q3').val("");
             $('#Q4').val("");
             $('#Q5').val("");
+            $('#Q6').val("");
+            $('#Q7').val("");
+            $('#Q8').val("");
+            $('#Q9').val("");
+            $('#Q10').val("");
+
            
         } else {
             alert("Please complete all fields. Thank you.")
         }
+
+        
         
     });
 });
